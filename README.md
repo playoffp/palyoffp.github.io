@@ -1,2 +1,2 @@
-(https://github.com/playoffp/palyoffp.github.io/blob/main/index.html)
+https://playoffp.github.io/palyoffp.github.io/
 oh yeah
