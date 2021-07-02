@@ -1,82 +1,50 @@
 <!DOCTYPE html>
 <html>
 	<head>
-    <meta charset="utf-8">
-		<title>MY CV</title>
-    
-    <style>
-      img{
-	      float:right;
-	      width:"10";
-	      height:"10";
-      }
-      ul {
-        font-family:"Times New Roman",serif;
-	font-size:50px;     
-        color:#272727;
-      }
-	   
-      div{
-	color:black;
-       }
-      .skr {
-        width: 200px;
-        height: 200px;
-        background-image:url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yyNRyFqR_fLfDUrwNFiYTzbSuNpzLGltGg&usqp=CAU");
-        position: relative;
-        animation-name: MoveToRight;  
-        animation-duration: 4s;  
-        animation-delay: 2s;    
-        animation-iteration-count: infinite;   
-      }
-      @keyframes MoveToRight {
-        0% { left: 0; }
-        25% { left: 20%; }
-        50% { left: 40%; }
-        75% { left: 60%; }
-        100% { left: 80%; }
-      }
-      
-    </style>
-    
-    
-      </head>
-      <body>
-     
-      <center><h1>蘇昱銓<img src="https://media.tenor.com/images/591d959261c492366416c42a3b4f6b7c/tenor.gif" alt="this is me" ></h1></center>
-      <hr color="black" size="5" />
-      <ul>
-        <li>性別:男</li>
-        <li>年齡:20</li>
-        <li>學歷:<a href="https://im.mgt.ncu.edu.tw/" target="_blank">中央大學資管系</a></li>
-        <li>社團經驗:籃球社</li>
-        <li>興趣:打電動</li>
-        <li>程式語言:c,c++,java,python</li>
-        <li>座右銘:在哪裡倒下,就在那躺下</li>
-      </ul>
-    
-		
-      <p>Q:為甚麼母鯊比較大?</p>
-      <p id="ans1">......</p>
-      <button type="button" onclick="Answer1()">Answer</button>
-      
-     
-      <p>有天主人幫貓換了一盆顆粒較細的貓砂</p>
-      <p id="ans2">於是貓說:</p>
-      <button type="button" onclick="Answer2()">Answer</button>
-     
-      <div class="skr"></div>
-    
-     <script>
-	function Answer1(){
-        document.getElementById("ans1").innerHTML="因為公鯊小";
-	}
-	function Answer2(){
-        document.getElementById("ans2").innerHTML="這砂小!";
-	}
-     </script> 
-      
-      
-		
+		<title>比特幣匯率轉換</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div>
+		<center>
+			<h1>比特幣轉換美金小工具</h1>
+			<form name='form' id='form'>
+  			匯率日期
+  			<input type="date" name="date" id="date" /> 
+  			<input type="text" name="btc" id="btc" />比特幣
+			</form>
+			<button id="transfer_btn">轉換</button>
+			<p id="result1"></p>
+			<table border="1" width="1000" height="200">
+				<tr style="background-color:#00AEAE">
+					<th>當前匯率</th>
+				</tr>
+				<tr>
+					<td><center>一比特幣約<span id="result2"></span>美金</center></td>
+				</tr>
+		</center>
+		</div>
+	        <script>
+			const transfer_btn=document.getElementById('transfer_btn');			
+			transfer_btn.addEventListener('click',transfer)
+
+
+			function transfer() {
+
+				const dateElement=document.getElementById('date');
+				const date=dateElement.value;
+				const btcElement=document.getElementById('btc');
+				const btc=btcElement.value;
+
+
+
+				fetch('https://api.coindesk.com/v1/bpi/historical/close.json?start='+date+'&end='+date,{method:'get'})
+					.then(response => {return response.json()})
+					.catch(error =>{alert("查無該日期匯率資料!")})
+					.then(data =>{document.getElementById('result1').innerHTML=data.bpi[date]*btc+"美金"
+		              		document.getElementById('result2').innerHTML=data.bpi[date];})
+
+			}
+		</script>
 	</body>
 </html>
